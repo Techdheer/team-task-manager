@@ -17,7 +17,7 @@ function Signup() {
 
   const handleSignup = async () => {
     try {
-      await API.post("/auth/register", formData);
+    await API.post("/auth/signup", formData);
 
       alert("Signup Successful");
 
