@@ -41,19 +41,12 @@ exports.getTasks = async (req, res) => {
   try {
     let tasks;
 
-    if (req.user.role === "admin") {
-      tasks = await Task.find()
-        .populate("assignedTo", "name email")
-        .populate("createdBy", "name")
-        .populate("project", "name");
-    } else {
-      tasks = await Task.find({
-        assignedTo: req.user.id,
-      })
-        .populate("assignedTo", "name email")
-        .populate("createdBy", "name")
-        .populate("project", "name");
-    }
+   tasks = await Task.find({
+  createdBy: req.user.id,
+})
+  .populate("assignedTo", "name email")
+  .populate("createdBy", "name")
+  .populate("project", "name");
 
     res.json(tasks);
 
