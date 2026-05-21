@@ -8,13 +8,14 @@ const authRoutes = require("./routes/authRoutes");
 const testRoutes = require("./routes/testRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const projectRoutes = require("./routes/projectRoutes");
-
+const userRoutes = require("./routes/userRoutes");
 dotenv.config();
 
 const app = express();
 
 // middleware
 app.use(cors());
+
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 app.use("/api/projects", projectRoutes);
@@ -24,7 +25,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/tasks", taskRoutes);
-
+app.use("/api/users", userRoutes);
 
 // test route
 app.get("/", (req, res) => {
