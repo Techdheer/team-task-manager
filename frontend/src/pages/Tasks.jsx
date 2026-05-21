@@ -1,35 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import API from "../services/api";
 
 function Tasks() {
+  const [tasks, setTasks] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     priority: "medium",
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+  const token = localStorage.getItem("token");
+
+  const fetchTasks = async () => {
+    const res = await API.get("/tasks", {
+      headers: { Authorization: `Bearer ${token}` },
     });
+
+    setTasks(res.data);
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleCreateTask = async () => {
-    try {
-      const token = localStorage.getItem("token");
+    await API.post("/tasks", formData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-      await API.post("/tasks", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      alert("Task Created Successfully");
-    } catch (error) {
-      alert(error.response?.data?.message || "Task create failed");
-    }
+    alert("Task Created Successfully");
+    fetchTasks();
   };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   return (
     <div className="p-10">
@@ -39,14 +44,25 @@ function Tasks() {
       <input name="description" placeholder="Description" onChange={handleChange} className="border p-3 mb-3 block" />
 
       <select name="priority" onChange={handleChange} className="border p-3 mb-3 block">
-        <option value="low">Low</option>
         <option value="medium">Medium</option>
+        <option value="low">Low</option>
         <option value="high">High</option>
       </select>
 
-      <button onClick={handleCreateTask} className="bg-black text-white px-5 py-3">
+      <button onClick={handleCreateTask} className="bg-black text-white px-5 py-3 mb-8">
         Create Task
       </button>
+
+      <h2 className="text-2xl font-bold mb-4">Task List</h2>
+
+      {tasks.map((task) => (
+        <div key={task._id} className="border p-4 rounded mb-3">
+          <h3 className="font-bold">{task.title}</h3>
+          <p>{task.description}</p>
+          <p>Priority: {task.priority}</p>
+          <p>Status: {task.status}</p>
+        </div>
+      ))}
     </div>
   );
 }
