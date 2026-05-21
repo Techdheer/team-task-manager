@@ -28,15 +28,7 @@ function ProjectDetails() {
   }
 };
 
-  const fetchUsers = async () => {
-    const res = await API.get("/users", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    setUsers(res.data);
-  };
+ 
 
   const addMember = async () => {
     await API.post(
