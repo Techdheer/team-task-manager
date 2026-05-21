@@ -18,7 +18,6 @@ const adminMiddleware = require("../middleware/adminMiddleware");
 router.post(
   "/",
   authMiddleware,
-  adminMiddleware,
   createTask
 );
 
