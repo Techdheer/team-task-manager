@@ -13,15 +13,20 @@ function ProjectDetails() {
 
   const token = localStorage.getItem("token");
 
-  const fetchProject = async () => {
-    const res = await API.get(`/projects/${id}`, {
+ const fetchUsers = async () => {
+  try {
+    const res = await API.get("/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    setProject(res.data);
-  };
+    setUsers(res.data);
+    console.log("Users:", res.data);
+  } catch (error) {
+    console.log("Users fetch error:", error.response?.data || error.message);
+  }
+};
 
   const fetchUsers = async () => {
     const res = await API.get("/users", {
