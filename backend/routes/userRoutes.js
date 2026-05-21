@@ -14,14 +14,12 @@ const adminMiddleware = require("../middleware/adminMiddleware");
 router.get(
   "/",
   authMiddleware,
-  adminMiddleware,
   getUsers
 );
 
 router.get(
   "/:id",
   authMiddleware,
-  adminMiddleware,
   getUserById
 );
 
