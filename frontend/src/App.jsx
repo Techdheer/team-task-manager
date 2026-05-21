@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import Tasks from "./pages/Tasks";
 import KanbanBoard from "./pages/KanbanBoard";
+import ProjectDetails from "./pages/ProjectDetails";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/kanban" element={<KanbanBoard />} />
+        <Route path="/projects/:id" element={<ProjectDetails />} />
       </Routes>
     </BrowserRouter>
   );
